@@ -1,0 +1,12 @@
+{
+  "name": "shan-mini-bot-site",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": "22.x" },
+  "dependencies": {
+    "@whiskeysockets/baileys": "6.7.24",
+    "mongodb": "^6.8.0",
+    "pino": "^9.0.0"
+  }
+}

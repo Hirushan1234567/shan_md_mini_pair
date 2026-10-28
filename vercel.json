@@ -1,0 +1,8 @@
+{
+  "cleanUrls": true,
+  "functions": {
+    "api/pair.js": { "maxDuration": 300 },
+    "api/sender-pair.js": { "maxDuration": 300 },
+    "api/[...path].js": { "maxDuration": 60 }
+  }
+}
