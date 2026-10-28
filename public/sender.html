@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>OTP sender setup — SHAN MINI BOT</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+<div id="toast" role="status"></div>
+<main class="wrap" style="padding-top:28px;padding-bottom:40px">
+  <a class="back-link" href="/">← Back to site</a>
+  <h1 style="font-family:var(--display);font-size:22px;margin:14px 0 8px">OTP sender setup</h1>
+  <p class="lead">This is the WhatsApp number that sends login OTPs to your users. Link it once. Use a separate number, not a number that already runs a panel bot.</p>
+
+  <div class="card" id="statusCard"><b id="stLine">Checking…</b></div>
+
+  <div class="card" id="formCard">
+    <label class="field" style="margin-top:0"><span>Admin password</span><input class="input" id="pw" type="password" autocomplete="off"></label>
+    <label class="field"><span>Bot number to link</span><input class="input" id="num" type="tel" inputmode="numeric" placeholder="94771234567"></label>
+    <div class="err" id="err" hidden></div>
+    <button class="btn" id="go" type="button" style="margin-top:16px">Get pair code</button>
+  </div>
+
+  <div class="card" id="codeCard" hidden>
+    <div class="codebox" id="code">----</div>
+    <p class="hint" id="timer" style="text-align:center;color:var(--gold)"></p>
+    <p class="muted">On that phone: WhatsApp → Settings → Linked devices → Link a device → Link with phone number instead → type the code.</p>
+    <p id="msg" style="margin-top:10px;font-weight:700"></p>
+  </div>
+</main>
+<script type="module" src="/js/sender.js"></script>
+</body>
+</html>

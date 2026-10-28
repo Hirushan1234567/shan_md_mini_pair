@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070a17">
+<title>SHAN Coins — dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Noto+Sans+Sinhala:wght@400;600;700&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- ===== Login gate (WhatsApp OTP) ===== -->
+<section id="gate" class="gate" hidden>
+  <div class="gate-card">
+    <a class="back-link" href="/">← Back to site</a>
+    <h1>Log in with WhatsApp</h1>
+    <p class="lead">Enter your number and the Bot Key the bot sent to your WhatsApp when you linked it. Then we send a 6-digit OTP.</p>
+
+    <form id="stepNum">
+      <label class="field"><span>WhatsApp number</span>
+        <input class="input" id="aNum" type="tel" inputmode="numeric" placeholder="94771234567" autocomplete="tel" maxlength="20"></label>
+      <p class="hint">Country code first, without + or 0.</p>
+      <label class="field"><span>Bot Key</span>
+        <input class="input" id="aKey" placeholder="SHAN-XXXX-XXXX" autocomplete="off" autocapitalize="characters" maxlength="14"></label>
+      <p class="hint">No key yet? <a href="/#home" style="color:var(--cyan)">Link your bot</a> and it arrives on WhatsApp. Lost it? <a href="#" id="keyResend" style="color:var(--cyan)">Send me a new key</a>.</p>
+      <div class="err" id="aErr" hidden></div>
+      <button class="btn wa" id="sendBtn" type="submit" style="margin-top:16px">Send OTP</button>
+    </form>
+
+    <form id="stepOtp" hidden>
+      <div class="sent"><span>💬</span><div>Code sent to <b id="sentTo"></b><br><small>Check WhatsApp, it arrives in a few seconds.</small></div></div>
+      <label class="field"><span>6-digit OTP</span>
+        <input class="input otp-in" id="aOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="••••••"></label>
+      <div id="newBox" hidden>
+        <label class="field"><span>Your name</span><input class="input" id="aName" maxlength="30" placeholder="How should we call you?"></label>
+        <label class="field"><span>Promo code (optional)</span><input class="input" id="aRef" maxlength="12" placeholder="SHAN-XXXXXX"></label>
+      </div>
+      <div class="err" id="aErr2" hidden></div>
+      <button class="btn" id="verifyBtn" type="submit" style="margin-top:16px">Verify and log in</button>
+      <div class="row-btns" style="margin-top:10px">
+        <button class="btn ghost" id="resendBtn" type="button" disabled>Resend OTP</button>
+        <button class="btn ghost" id="changeBtn" type="button">Change number</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ===== App ===== -->
+<div id="app" hidden>
+  <header class="bar">
+    <div class="wrap bar-row">
+      <a class="brand" href="/">SHAN <b>COINS</b></a>
+      <a class="home-link" href="/">Site</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="view on" id="v-coins">
+      <div id="annBox" class="card ann" hidden></div>
+      <div class="balance">
+        <small>Wallet balance</small>
+        <b id="bal">0</b>
+        <div class="bal-sub"><span>Earned <b id="earn">0</b></span><span>Spent <b id="spent">0</b></span></div>
+      </div>
+      <button class="btn gold" id="dailyBtn" data-act="daily" type="button" style="margin-top:14px">Claim daily reward</button>
+
+      <div class="card"><h3>Play and earn</h3><p class="muted" id="gInfo">Play games to earn a few coins every day.</p>
+        <div class="games">
+          <button class="btn ghost" data-game="snake" type="button">🐍 Snake</button>
+          <button class="btn ghost" data-game="g2048" type="button">🔢 2048</button>
+          <button class="btn ghost" data-game="memory" type="button">🧠 Memory</button>
+        </div></div>
+
+      <div class="card"><h3>Earn more coins</h3><div id="taskList"></div></div>
+
+      <div class="card"><h3>Redeem a coupon</h3>
+        <input class="input" id="rdCode" maxlength="20" placeholder="Coupon code" style="margin-top:8px">
+        <button class="btn" data-act="redeem" type="button" style="margin-top:10px">Redeem</button></div>
+
+      <div class="card"><h3>Send coins to a friend</h3><p class="muted">10 to 500 coins. We confirm with an OTP on your WhatsApp.</p>
+        <input class="input" id="snNum" type="tel" inputmode="numeric" placeholder="Friend's WhatsApp number" style="margin-top:8px">
+        <input class="input" id="snAmt" type="number" inputmode="numeric" placeholder="Amount" style="margin-top:8px">
+        <button class="btn" data-act="send" type="button" style="margin-top:10px">Send coins</button></div>
+
+      <div class="card"><h3>Top earners</h3><div id="lbList"></div></div>
+
+      <div class="card"><h3>Your promo code</h3>
+        <div class="codebox sm" id="refCode">-</div>
+        <p class="muted" id="refInfo"></p>
+        <button class="btn ghost" data-act="copyRef" type="button" style="margin-top:10px">Copy code</button></div>
+
+      <div class="card"><h3>History</h3><div id="txList"></div></div>
+    </section>
+
+    <section class="view" id="v-shop">
+      <h2>Plugin shop</h2>
+      <div class="tabs"><button id="tShop" class="on" data-shop="0" type="button">Shop</button><button id="tMine" data-shop="1" type="button">My plugins</button></div>
+      <p class="muted" id="shopBal"></p>
+      <div id="shopList"></div>
+    </section>
+
+    <section class="view" id="v-bot">
+      <h2>Bot control</h2>
+      <div class="card">
+        <div class="row"><span><i class="dot" id="stDot"></i><b id="stTxt">…</b></span><span class="pill" id="stPill"></span></div>
+        <div class="row-btns" style="margin-top:12px">
+          <button class="btn wa" id="bStart" data-bot="start" type="button">Start</button>
+          <button class="btn danger" id="bStop" data-bot="stop" type="button">Stop</button>
+        </div>
+        <a class="btn ghost" href="/#home" style="margin-top:10px">Link or re-link bot (pair code)</a>
+      </div>
+      <div class="card"><h3>Bot settings</h3>
+        <label class="field"><span>Prefix</span><input class="input" id="sPrefix" maxlength="3" placeholder="."></label>
+        <label class="field"><span>Bot name</span><input class="input" id="sName" maxlength="30" placeholder="SHAN MINI BOT"></label>
+        <label class="field"><span>Mode</span><select class="input" id="sMode"><option value="public">Public</option><option value="private">Private</option></select></label>
+        <label class="sw"><span>Auto seen</span><input type="checkbox" id="sSeen"></label>
+        <label class="sw"><span>Typing indicator</span><input type="checkbox" id="sTyping"></label>
+        <div id="wimgBox" hidden><label class="field"><span>Welcome image URL</span><input class="input" id="sImg" placeholder="https://…"></label></div>
+        <button class="btn" data-act="saveSet" type="button" style="margin-top:14px">Save settings</button>
+      </div>
+      <div class="card"><h3>API keys</h3><div id="keyList"></div>
+        <input class="input" id="kName" maxlength="30" placeholder="Key name, e.g. my-app" style="margin-top:10px">
+        <button class="btn" data-act="newKey" type="button" style="margin-top:10px">Generate key</button></div>
+    </section>
+
+    <section class="view" id="v-log">
+      <h2>Activity</h2>
+      <div class="card"><div id="logList"></div></div>
+    </section>
+
+    <section class="view" id="v-me">
+      <h2>My account</h2>
+      <div class="card">
+        <div class="row"><span>Name</span><b id="mName">-</b></div>
+        <div class="row"><span>WhatsApp</span><b id="mNum">-</b></div>
+        <div class="row"><span>Coins</span><b class="g" id="mCoins">0</b></div>
+        <div class="row"><span>Joined</span><b id="mJoin">-</b></div>
+        <button class="btn ghost" data-act="logout" type="button" style="margin-top:14px">Log out</button>
+      </div>
+      <h2 style="margin-top:24px" id="adminTap">Comments</h2>
+      <div class="card"><textarea class="input" id="dcMsg" maxlength="300" placeholder="Write a comment…"></textarea>
+        <button class="btn" data-act="postCm" type="button" style="margin-top:10px">Post comment</button></div>
+      <div id="cmList"></div>
+    </section>
+  </main>
+
+  <nav class="tabbar" aria-label="Dashboard">
+    <button class="on" data-v="coins" type="button"><i>🪙</i>Coins</button>
+    <button data-v="shop" type="button"><i>🛒</i>Shop</button>
+    <button data-v="bot" type="button"><i>🎮</i>Bot</button>
+    <button data-v="log" type="button"><i>📊</i>Activity</button>
+    <button data-v="me" type="button"><i>👤</i>Me</button>
+  </nav>
+</div>
+
+<!-- OTP confirm (purchase / send) -->
+<div id="otpModal" class="modal" role="dialog" aria-modal="true"><div class="sheet">
+  <h2>Confirm with OTP</h2>
+  <p class="lead" id="otpTitle"></p>
+  <input class="input otp-in" id="otpIn" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="••••••" style="margin-top:12px">
+  <button class="btn" id="otpOk" type="button" style="margin-top:14px">Confirm</button>
+  <button class="btn ghost" id="otpCancel" type="button">Cancel</button>
+</div></div>
+
+<!-- New API key -->
+<div id="keyModal" class="modal" role="dialog" aria-modal="true"><div class="sheet">
+  <h2>Your new API key</h2>
+  <p class="lead">Copy it now. For security we can't show it again.</p>
+  <div class="codebox sm" id="newKeyVal" style="font-size:13px;letter-spacing:0;word-break:break-all"></div>
+  <button class="btn" id="keyCopy" type="button">Copy key</button>
+  <button class="btn ghost" id="keyClose" type="button">Done</button>
+</div></div>
+
+<div id="gameModal" class="modal" role="dialog" aria-modal="true"><div class="sheet">
+  <h2 id="gTitle"></h2><div id="gBody"></div>
+  <button class="btn ghost" id="gClose" type="button" style="margin-top:12px">Close</button>
+</div></div>
+
+<!-- Admin (tap “Comments” heading 5 times) -->
+<div id="admModal" class="modal" role="dialog" aria-modal="true"><div class="sheet" style="max-width:520px">
+  <h2>Admin panel</h2>
+  <div id="admLogin"><input class="input" id="admPass" type="password" placeholder="Admin password" autocomplete="off"><button class="btn" id="admGo" type="button" style="margin-top:10px">Log in</button></div>
+  <div id="admPanel" hidden>
+    <div class="grid2" id="admStats"></div>
+    <p class="muted" id="admSender" style="margin-top:10px"></p>
+    <label class="field"><span>Announcement</span><input class="input" id="admAnn" maxlength="150" placeholder="Shown to everyone on the Coins tab"></label>
+    <button class="btn" data-adm="ann" type="button" style="margin-top:8px">Post announcement</button>
+    <label class="field"><span>Create coupon</span><input class="input" id="cpCode" maxlength="20" placeholder="CODE"></label>
+    <div class="grid2" style="margin-top:8px"><input class="input" id="cpCoins" type="number" placeholder="Coins"><input class="input" id="cpUses" type="number" placeholder="Max uses"></div>
+    <button class="btn" data-adm="coupon" type="button" style="margin-top:8px">Create coupon</button>
+    <label class="field"><span>Users</span></label><div id="admUsers"></div>
+    <label class="field"><span>Comments</span></label><div id="admCms"></div>
+  </div>
+  <button class="btn ghost" id="admClose" type="button" style="margin-top:12px">Close</button>
+</div></div>
+
+<script type="module" src="/js/dashboard.js"></script>
+</body>
+</html>

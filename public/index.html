@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070a17">
+<title>SHAN MINI BOT — WhatsApp bot for Sri Lanka</title>
+<meta name="description" content="Link SHAN MINI BOT to your WhatsApp with a pair code. AI chat, downloaders, group tools and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Noto+Sans+Sinhala:wght@400;600;700&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/landing.css">
+</head>
+<body>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="#home" aria-label="SHAN MINI BOT home">
+      <img id="logoImg" alt="" width="40" height="40">
+      <span>SHAN <b>MINI BOT</b></span>
+    </a>
+    <div class="clock" title="Sri Lanka time"><span id="clock">--:--:--</span><small id="date"></small></div>
+  </div>
+</header>
+
+<main>
+  <section id="home" class="hero wrap">
+    <p class="kingdom">Kingdom of Devill · V01</p>
+    <h1>A WhatsApp bot that never goes offline.</h1>
+    <p class="lead">AI chat, song and video downloaders, group tools and channel songs. Link it to your number with a pair code in under a minute.</p>
+    <div class="cta">
+      <button class="btn wa" id="deployBtn" type="button">Link your bot</button>
+      <a class="btn ghost" href="/dashboard">Open Coins dashboard</a>
+    </div>
+
+    <figure class="phone" aria-label="Example chat with the bot">
+      <div class="phone-bar"><img id="logoImg2" alt="" width="34" height="34"><div><b>SHAN MINI BOT</b><small>online</small></div></div>
+      <div class="chat" id="chat">
+        <div class="msg me" style="--d:.4s">.menu <i>9:41</i></div>
+        <div class="msg bot" style="--d:1.3s"><b>SHAN MINI BOT</b><br>⬇️ Download &nbsp;🤖 AI &nbsp;👥 Group &nbsp;🎵 Songs<i>9:41</i></div>
+        <div class="msg me" style="--d:2.4s">.song Kandula<i>9:42</i></div>
+        <div class="msg bot" style="--d:3.3s">🎵 Sending audio…<i>9:42</i></div>
+        <div class="msg bot otp" style="--d:4.6s">🔐 Your login OTP: <b>482 913</b><br><small>Valid for 5 minutes.</small><i>9:43</i></div>
+      </div>
+    </figure>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="how">
+    <h2 id="how">Link it in three steps</h2>
+    <ol class="steps">
+      <li><b>Enter your WhatsApp number</b><span>With country code, no + or 0. Example: 94771234567.</span></li>
+      <li><b>Type the pair code in WhatsApp</b><span>Settings → Linked devices → Link with phone number instead.</span></li>
+      <li><b>Get your Bot Key</b><span>The bot sends it to your WhatsApp. You need it, plus an OTP, to log in to the dashboard.</span></li>
+    </ol>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="feat">
+    <h2 id="feat">What the bot does</h2>
+    <ul class="feats">
+      <li><span>⬇️</span><div><b>Downloaders</b><p>YouTube, TikTok, Facebook, Instagram and songs, one command each.</p></div></li>
+      <li><span>🤖</span><div><b>AI chat</b><p>Ask anything or have it write for you, right inside WhatsApp.</p></div></li>
+      <li><span>👥</span><div><b>Group tools</b><p>Tag all, kick, add, welcome messages, anti-link and anti-bot.</p></div></li>
+      <li><span>🎵</span><div><b>Channel songs</b><p>Daily and trending songs sent to your channel automatically.</p></div></li>
+      <li><span>🟢</span><div><b>Cloud hosted</b><p>Runs on a server, so it keeps answering when your phone is off.</p></div></li>
+      <li><span>🪙</span><div><b>SHAN Coins</b><p>Earn coins daily, play games and spend them on plugins.</p></div></li>
+    </ul>
+    <div class="band"><b>Logo design</b><p>Bot, team and channel logos by the Kingdom of Devill team. Message us from the support section.</p></div>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="join">
+    <h2 id="join">Join the community</h2>
+    <a class="chan" id="lnkWa" target="_blank" rel="noopener">WhatsApp channel <span>Join</span></a>
+    <a class="chan" id="lnkTg" target="_blank" rel="noopener">Telegram channel <span>Join</span></a>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="rev">
+    <h2 id="rev">User comments</h2>
+    <form class="card" id="cmForm">
+      <label class="field" style="margin-top:0"><span>Your name</span><input class="input" id="cName" maxlength="30" placeholder="Guest"></label>
+      <label class="field"><span>Comment</span><textarea class="input" id="cMsg" maxlength="300" placeholder="What do you think of the bot?"></textarea></label>
+      <button class="btn" type="submit" style="margin-top:14px">Post comment</button>
+    </form>
+    <div id="cmList" aria-live="polite"></div>
+  </section>
+
+  <section id="support" class="wrap sec" aria-labelledby="sup">
+    <h2 id="sup">Need help? Message the team</h2>
+    <div id="supportList"></div>
+    <p class="foot">© 2026 SHAN MINI BOT V01 · Kingdom of Devill</p>
+  </section>
+</main>
+
+<nav class="bottom-nav" aria-label="Main">
+  <a href="#home" class="on" data-nav>Home</a>
+  <a href="#support" data-nav>Support</a>
+  <a href="/dashboard">Coins</a>
+</nav>
+
+<!-- Pair modal -->
+<div id="pairModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="pairTitle">
+  <div class="sheet">
+    <h2 id="pairTitle">Link your bot</h2>
+    <div id="pForm">
+      <p class="lead">Enter your WhatsApp number to get a pair code. Then type it in WhatsApp under Linked devices.</p>
+      <label class="field"><span>WhatsApp number</span>
+        <input class="input" id="pNum" type="tel" inputmode="numeric" placeholder="94771234567" maxlength="20" autocomplete="tel"></label>
+      <p class="hint">Country code first, without + or 0.</p>
+      <div class="err" id="pErr" hidden></div>
+      <button class="btn" id="pGo" type="button" style="margin-top:16px">Get pair code</button>
+    </div>
+    <div id="pCodeBox" hidden>
+      <div class="codebox" id="pCode">----</div>
+      <p class="hint" id="pTimer" style="text-align:center;color:var(--gold)"></p>
+      <button class="btn ghost" id="pCopy" type="button" style="margin-top:10px">Copy code</button>
+      <ol class="pair-steps">
+        <li>Open WhatsApp</li>
+        <li>Settings → <b>Linked devices</b></li>
+        <li><b>Link a device</b> → <b>Link with phone number instead</b></li>
+        <li>Type the code above</li>
+      </ol>
+      <div class="state wait" id="pState"><span class="spin" id="pSpin"></span><span id="pStText">Waiting for you to enter the code…</span></div>
+      <a class="btn wa" id="pDash" href="/dashboard" hidden style="margin-top:12px">Open Coins dashboard</a>
+      <button class="btn ghost" id="pAgain" type="button" hidden>Start over</button>
+    </div>
+    <button class="btn ghost" id="pClose" type="button" style="margin-top:12px">Close</button>
+  </div>
+</div>
+
+<script type="module" src="/js/landing.js"></script>
+</body>
+</html>
